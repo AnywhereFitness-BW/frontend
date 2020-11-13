@@ -1,13 +1,13 @@
-import './App.css';
-import Register from './components/Register.js'
-import React from 'react'
+import "./App.css";
+import Register from "./components/Register.js";
+import React from "react";
 // import Login from './components/Login.js'
 
 const intitialRegisterState = {
-  name: '',
-  text: '',
-  email: '',
-}
+  name: "",
+  text: "",
+  email: "",
+};
 
 function App() {
   return (

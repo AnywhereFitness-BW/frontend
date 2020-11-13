@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 import * as Yup from "yup";
 // import styled from 'styled-components'
 // import ReactDOM from 'react-dom';
 
-
-// const StyledForm = styled.div` 
+// const StyledForm = styled.div`
 //   border: 2px solid black;
 //   background-color: pink;
 // `
@@ -16,70 +15,91 @@ import * as Yup from "yup";
 //   justify-content: center;
 //   margin: 0px auto;
 
-
 const Register = () => {
   const [formData, setFormData] = useState({
-    fname: '',
-    lname: '',
-    email: '',
-    password: '',
-    userRole: ''
-});
+    fname: "",
+    lname: "",
+    email: "",
+    password: "",
+    userRole: "",
+    authCode: "",
+  });
 
-  const onInputChange = event => {
+  const onInputChange = (event) => {
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value
-   });
+      [event.target.name]: event.target.value,
+    });
   };
 
-
   return (
-     <div>
+    <div>
       <h1>Register Now!</h1>
-       <form onSubmit={evt => {
-           evt.preventDefault();
-           axios.get(`?formData=${formData}`)
-       }}>
+      <form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          axios.get(`?formData=${formData}`);
+        }}
+      >
+        <input
+          onChange={onInputChange}
+          name="fname"
+          id="fname"
+          type="text"
+          value={formData.fname}
+          placeholder="First name"
+        />
+        <input
+          onChange={onInputChange}
+          name="lname"
+          id="lname"
+          type="text"
+          value={formData.lname}
+          placeholder="Last name"
+        />
+        <br />
+
+        <input
+          onChange={onInputChange}
+          name="email"
+          id="email"
+          type="text"
+          value={formData.email}
+          placeholder="Email address"
+        />
+        <br />
+
+        <input
+          onChange={onInputChange}
+          name="password"
+          id="password"
+          type="text"
+          value={formData.password}
+          placeholder="Create password"
+        />
+        <br />
+        <label>
+          Choose one:
+          <select onChange={onInputChange}>
+            <option />
+            <option>I am a student.</option>
+            <option>I am an instructor.</option>
+          </select>
+        </label>
+        <label htmlFor="code">
+          Authorization code:
           <input
-           onChange={onInputChange}
-            name='fname'
-            type='text' 
-            // value={formData.fname}
-            placeholder='First name'
-           /><br />
-
-           <input
             onChange={onInputChange}
-             name='lname'
-             type='text'
-            //  value={values.text}
-             placeholder='Last name'
-            /><br />
-
-           <input
-             onChange={onInputChange}
-             name='email'
-             type='text'
-            //  value={values.text}
-             placeholder='Email address'
-           /><br />
-
-           <input
-             onChange={onInputChange}
-             name='password'
-             type='text'
-             placeholder='Create password'
-            /><br/>
-
-           <select onChange={onInputChange}> 
-             <option>I am a student.</option>
-             <option>I am an instructor.</option> 
-           </select>
-         
-          <input type='submit' />
+            name="authCode"
+            id="authCode"
+            value={formData.authCode}
+            type="text"
+            placeholder="Instructors only"
+          />
+        </label>
+        <input type="submit" />
       </form>
-     </div>
+    </div>
   );
 };
 
