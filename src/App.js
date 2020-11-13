@@ -1,6 +1,7 @@
 import './App.css';
 import Register from './components/Register.js'
 import React from 'react'
+// import Login from './components/Login.js'
 
 const intitialRegisterState = {
   name: '',
@@ -11,7 +12,6 @@ const intitialRegisterState = {
 function App() {
   return (
     <div className="App">
-      <h1>Hello World!</h1>
       <Register />
     </div>
   );

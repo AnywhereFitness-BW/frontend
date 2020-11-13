@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import styled from 'styled-components'
+import axios from 'axios';
+import * as Yup from "yup";
+// import styled from 'styled-components'
 // import ReactDOM from 'react-dom';
 
 
@@ -16,30 +18,39 @@ import styled from 'styled-components'
 
 
 const Register = () => {
-  const [fname, setFname] = useState('');
-  const [lname, setLname] = useState('');
-  const [email, setEmail] = useState('');
-  const [userRole, setUserRole] = useState('');
+  const [formData, setFormData] = useState({
+    fname: '',
+    lname: '',
+    email: '',
+    password: '',
+    userRole: ''
+});
+
+  const onInputChange = event => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value
+   });
+  };
 
 
   return (
      <div>
-       <form>
-        <label htmlFor='registerInput'>Register here:</label>
+      <h1>Register Now!</h1>
+       <form onSubmit={evt => {
+           evt.preventDefault();
+           axios.get(`?formData=${formData}`)
+       }}>
           <input
-           onChange={event => {
-            setFname(event.target.value)
-        }}
+           onChange={onInputChange}
             name='fname'
             type='text' 
-            // value={values.text}
+            // value={formData.fname}
             placeholder='First name'
            /><br />
 
            <input
-            onChange={event => {
-             setLname(event.target.value)
-            }}
+            onChange={onInputChange}
              name='lname'
              type='text'
             //  value={values.text}
@@ -47,27 +58,29 @@ const Register = () => {
             /><br />
 
            <input
-            onChange={event => {
-             setEmail(event.target.value)
-           }}
-             email='email'
+             onChange={onInputChange}
+             name='email'
              type='text'
             //  value={values.text}
              placeholder='Email address'
            /><br />
 
-          <label htmlFor='userInput'>Choose one:
-          <select onChange={event => {
-              setUserRole(event.target.value);
-          }}> 
+           <input
+             onChange={onInputChange}
+             name='password'
+             type='text'
+             placeholder='Create password'
+            /><br/>
+
+           <select onChange={onInputChange}> 
              <option>I am a student.</option>
              <option>I am an instructor.</option> 
-             </select>
-          </label>
+           </select>
+         
           <input type='submit' />
       </form>
      </div>
   );
-}
+};
 
-export default Register
+export default Register;
