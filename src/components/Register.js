@@ -75,13 +75,13 @@ const Register = () => {
           value={formData.password}
           placeholder="Create password"
         />
-      
+
         <label>
           Choose one:
           <select onChange={onInputChange}>
-            <option />
-            <option>I am a student.</option>
-            <option>I am an instructor.</option>
+            <option>--Choose one--</option>
+            <option value="student">I am a student.</option>
+            <option value="instructor">I am an instructor.</option>
           </select>
         </label>
         <label htmlFor="code">
@@ -95,7 +95,8 @@ const Register = () => {
             placeholder="Instructors only"
           />
         </label>
-        <input type="submit" />
+        {/* <input type="submit" /> */}
+        <button type="submit">Submit</button>
       </form>
     </div>
   );

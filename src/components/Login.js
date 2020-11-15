@@ -7,7 +7,7 @@ const Login = () => {
     password: "",
   });
 
-  const [submitIsDisabled, setSubmitIsDisabled] = useState(true);
+  const [loginIsDisabled, setLoginIsDisabled] = useState(true);
 
   const onInputChange = (event) => {
     setLogin({
@@ -16,6 +16,7 @@ const Login = () => {
     });
   };
 
+  console.log("setLogin", setLogin);
   return (
     <div>
       <form
@@ -41,7 +42,10 @@ const Login = () => {
           placeholder="Enter password"
           value={login.password}
         />
-        <input type="submit" />
+        {/* <input type="submit" /> */}
+        <button type="submit" disabled={loginIsDisabled}>
+          Submit
+        </button>
       </form>
     </div>
   );
