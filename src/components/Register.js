@@ -57,7 +57,6 @@ const Register = () => {
           value={formData.lname}
           placeholder="Last name"
         />
-        <br />
 
         <input
           onChange={onInputChange}
@@ -67,7 +66,6 @@ const Register = () => {
           value={formData.email}
           placeholder="Email address"
         />
-        <br />
 
         <input
           onChange={onInputChange}
@@ -77,7 +75,7 @@ const Register = () => {
           value={formData.password}
           placeholder="Create password"
         />
-        <br />
+      
         <label>
           Choose one:
           <select onChange={onInputChange}>
