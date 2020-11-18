@@ -4,7 +4,7 @@ import axios from "axios";
 const Login = () => {
   const [login, setLogin] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
   const [loginIsDisabled, setLoginIsDisabled] = useState(true);
