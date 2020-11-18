@@ -40,6 +40,7 @@ const Register = () => {
   });
 
   const validateChange = (e) => {
+    e.persist();
     yup
       .reach(formSchema, e.target.name)
       .validate(e.target.value)
@@ -59,12 +60,16 @@ const Register = () => {
       ...formData,
       [event.target.name]: event.target.value,
     });
+    validateChange(event);
   };
 
   const formSchema = yup.object().shape({
     fname: yup.string().required("First name is required"),
     lname: yup.string().required("Last name is required"),
-    email: yup.string().email("Email is required"),
+    email: yup
+      .string()
+      .email("Not a valid email")
+      .required("Email is required"),
     password: yup.string().required("Please create a password"),
     confirmPassword: yup.string().required("Please confirm password"),
     userRole: yup.string().oneOf(["student", "instructor"]),
@@ -78,20 +83,49 @@ const Register = () => {
     });
   }, [formData]);
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    formSchema.isValid(formData).then((valid) => {
+      if (!valid) return;
+    });
+    if (formData.password !== formData.confirmPassword) {
+      setErrors({ ...errors, confirmPassword: "Passwords don't match" });
+      return;
+    }
+    setErrors({ ...errors, confirmPassword: "" });
+    console.log("form submitted");
+  };
+
+  const hasErrors = () => {
+    if (errors.fname) return true;
+    if (errors.lname) return true;
+    if (errors.email) return true;
+    if (errors.password) return true;
+    if (errors.confirmPassword) return true;
+    return false;
+  };
+
   return (
     <div>
       <h1>Register Now!</h1>
-      <form
-        onSubmit={(evt) => {
-          evt.preventDefault();
-          axios.get(`?formData=${formData}`);
-        }}
-      >
+      {hasErrors() && (
+        <div>
+          Here are the errors. <br />
+          First name: {errors.fname}
+          <br />
+          Last name: {errors.lname} <br />
+          Email: {errors.email} <br />
+          Password: {errors.password} <br />
+          Confirm password: {errors.confirmPassword} <br />
+        </div>
+      )}
+      <form onSubmit={onSubmit}>
         <input
           onChange={onInputChange}
           name="fname"
           id="fname"
           type="text"
+          onBlur={onInputChange}
           value={formData.fname}
           placeholder="First name"
         />
@@ -100,6 +134,7 @@ const Register = () => {
           name="lname"
           id="lname"
           type="text"
+          onBlur={onInputChange}
           value={formData.lname}
           placeholder="Last name"
         />
@@ -109,6 +144,7 @@ const Register = () => {
           name="email"
           id="email"
           type="text"
+          onBlur={onInputChange}
           value={formData.email}
           placeholder="Email address"
         />
@@ -117,7 +153,8 @@ const Register = () => {
           onChange={onInputChange}
           name="password"
           id="password"
-          type="text"
+          type="password"
+          onBlur={onInputChange}
           value={formData.password}
           placeholder="Create password"
         />
@@ -126,7 +163,8 @@ const Register = () => {
           onChange={onInputChange}
           name="confirmPassword"
           id="confirmPassword"
-          type="text"
+          type="password"
+          onBlur={onInputChange}
           value={formData.confirmPassword}
           placeholder="Confirm password"
         />
