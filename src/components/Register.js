@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import * as yup from "yup";
+import { UncontrolledAlert, Container } from "reactstrap";
 // import styled from 'styled-components'
 // import ReactDOM from 'react-dom';
 
@@ -96,29 +96,31 @@ const Register = () => {
     console.log("form submitted");
   };
 
-  const hasErrors = () => {
-    if (errors.fname) return true;
-    if (errors.lname) return true;
-    if (errors.email) return true;
-    if (errors.password) return true;
-    if (errors.confirmPassword) return true;
-    return false;
-  };
-
   return (
-    <div>
+    <Container>
       <h1>Register Now!</h1>
-      {hasErrors() && (
-        <div>
-          Here are the errors. <br />
-          First name: {errors.fname}
-          <br />
-          Last name: {errors.lname} <br />
-          Email: {errors.email} <br />
-          Password: {errors.password} <br />
-          Confirm password: {errors.confirmPassword} <br />
-        </div>
-      )}
+      <div>
+        {errors.fname && (
+          <UncontrolledAlert color="danger"> {errors.fname} </UncontrolledAlert>
+        )}
+        {errors.lname && (
+          <UncontrolledAlert color="danger">{errors.lname} </UncontrolledAlert>
+        )}
+        {errors.email && (
+          <UncontrolledAlert color="danger">{errors.email} </UncontrolledAlert>
+        )}
+        {errors.password && (
+          <UncontrolledAlert color="danger">
+            {errors.password}{" "}
+          </UncontrolledAlert>
+        )}
+        {errors.confirmPassword && (
+          <UncontrolledAlert color="danger">
+            {errors.confirmPassword}{" "}
+          </UncontrolledAlert>
+        )}
+      </div>
+
       <form onSubmit={onSubmit}>
         <input
           onChange={onInputChange}
@@ -196,7 +198,7 @@ const Register = () => {
           Submit
         </button>
       </form>
-    </div>
+    </Container>
   );
 };
 
