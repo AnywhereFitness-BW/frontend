@@ -11,8 +11,8 @@ function App() {
   return (
     <div className="App">
       <h1>FITNESS ANYWHERE</h1>
-      <h1>Login</h1>
-      <h2>Get Started</h2>
+      {/* <h1>Login</h1>
+      <h2>Get Started</h2> */}
       <Switch>
         {/* <Register /> */}
         {/* <PrivateRoute exact path="" component={} /> */}
