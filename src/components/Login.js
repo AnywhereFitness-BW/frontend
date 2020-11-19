@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+// import axios from "axios";
+import * as yup from "yup";
+import { UncontrolledAlert, Container } from "reactstrap";
 
 const Login = () => {
   const [login, setLogin] = useState({
@@ -7,47 +9,103 @@ const Login = () => {
     password: "",
   });
 
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
   const [loginIsDisabled, setLoginIsDisabled] = useState(true);
+
+  const validateChange = (e) => {
+    e.persist();
+    yup
+      .reach(formSchema, e.target.name)
+      .validate(e.target.value)
+      .then((valid) => {
+        setErrors({ ...errors, [e.target.name]: "" });
+      })
+      .catch((err) => {
+        setErrors({ ...errors, [e.target.name]: err.errors[0] });
+      });
+  };
 
   const onInputChange = (event) => {
     setLogin({
       ...login,
       [event.target.name]: event.target.value,
     });
+    validateChange(event);
   };
 
-  console.log("setLogin", setLogin);
+  const formSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Not a valid email")
+      .required("Email is required"),
+    password: yup.string().required("Please enter password"),
+  });
+
+  useEffect(() => {
+    formSchema.isValid(Login).then((valid) => {
+      // console.log("is my form valid?", valid);
+      setLoginIsDisabled(!valid);
+    });
+  }, [formSchema]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    formSchema.isValid(login).then((valid) => {
+      if (!valid) return;
+    });
+    console.log("form submitted");
+  };
+
   return (
-    <div>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          axios.get(`?login=${login}`);
-        }}
-      >
-        <h2>Login</h2>
-        <input
-          onChange={onInputChange}
-          name="email"
-          email="email"
-          type="text"
-          placeholder="Enter email"
-          value={login.email}
-        />
-        <input
-          onChange={onInputChange}
-          name="password"
-          password="password"
-          type="text"
-          placeholder="Enter password"
-          value={login.password}
-        />
-        {/* <input type="submit" /> */}
-        <button type="submit" disabled={loginIsDisabled}>
-          Submit
-        </button>
-      </form>
-    </div>
+    <Container>
+      <div>
+        <div>
+          {errors.email && (
+            <UncontrolledAlert color="danger">
+              {errors.email}{" "}
+            </UncontrolledAlert>
+          )}
+          {errors.password && (
+            <UncontrolledAlert color="danger">
+              {errors.password}{" "}
+            </UncontrolledAlert>
+          )}
+        </div>
+        <form onSubmit={onSubmit}>
+          {/* // onSubmit={(event) => { */}
+          {/* //   event.preventDefault(); */}
+          {/* //   axios.get(`?login=${login}`); */}
+          {/* // }} */}
+          <h2>Login</h2>
+          <input
+            onChange={onInputChange}
+            onBlur={onInputChange}
+            name="email"
+            email="email"
+            type="text"
+            placeholder="Enter email"
+            value={login.email}
+          />
+          <input
+            onChange={onInputChange}
+            onBlur={onInputChange}
+            name="password"
+            password="password"
+            type="password"
+            placeholder="Enter password"
+            value={login.password}
+          />
+          {/* <input type="submit" /> */}
+          <button type="submit" disabled={loginIsDisabled}>
+            Submit
+          </button>
+        </form>
+      </div>
+    </Container>
   );
 };
 

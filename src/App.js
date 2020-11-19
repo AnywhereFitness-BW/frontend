@@ -6,7 +6,7 @@ import { Route, Link, Switch, useHistory } from "react-router-dom";
 
 function App() {
   const history = useHistory();
-  history.push("/register");
+  history.push("/login");
 
   return (
     <div className="App">
