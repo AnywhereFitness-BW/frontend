@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from "react";
 // import axios from "axios";
+import styled from "styled-components";
 import * as yup from "yup";
 import {
   UncontrolledAlert,
   Container,
-  Button,
   Form,
   Row,
   Col,
   ButtonToggle,
 } from "reactstrap";
 
-const Login = () => {
+const CustomBox = styled("div")`
+  width: 300px;
+  margin: 0px auto;
+  border-radius: 10px;
+  padding: 40px;
+  border: 10px;
+  background-color: ${(props) => (props.active ? "purple" : "purple")};
+`;
+
+const BoxContents = styled("div")`
+  margin-right: 150px;
+`;
+
+const Login = (props) => {
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -69,7 +82,8 @@ const Login = () => {
   };
 
   return (
-    <Container>
+    <CustomBox active={props.active}>
+      {/* <Container> */}
       <div>
         {errors.email && (
           <UncontrolledAlert color="danger">{errors.email} </UncontrolledAlert>
@@ -81,36 +95,43 @@ const Login = () => {
         )}
       </div>
 
-      <Form onSubmit={onSubmit}>
-        <Row xs="2">
-          <Col sm="12" md={{ size: 6, offset: 3 }}>
-            <h2>Login</h2>
-            <input
-              onChange={onInputChange}
-              onBlur={onInputChange}
-              name="email"
-              email="email"
-              type="text"
-              placeholder="Enter email"
-              value={login.email}
-            />
-            <input
-              onChange={onInputChange}
-              onBlur={onInputChange}
-              name="password"
-              password="password"
-              type="password"
-              placeholder="Enter password"
-              value={login.password}
-            />
-            {/* <input type="submit" /> */}
-            <ButtonToggle color="info" type="submit" disabled={loginIsDisabled}>
-              Submit
-            </ButtonToggle>
-          </Col>
-        </Row>
-      </Form>
-    </Container>
+      <BoxContents>
+        <Form onSubmit={onSubmit}>
+          <Row xs="2">
+            <Col sm="12" md={{ size: 6, offset: 3 }}>
+              <h2>Login</h2>
+              <input
+                onChange={onInputChange}
+                onBlur={onInputChange}
+                name="email"
+                email="email"
+                type="text"
+                placeholder="Enter email"
+                value={login.email}
+              />
+              <input
+                onChange={onInputChange}
+                onBlur={onInputChange}
+                name="password"
+                password="password"
+                type="password"
+                placeholder="Enter password"
+                value={login.password}
+              />
+              {/* <input type="submit" /> */}
+              <ButtonToggle
+                color="info"
+                type="submit"
+                disabled={loginIsDisabled}
+              >
+                Submit
+              </ButtonToggle>
+            </Col>
+          </Row>
+        </Form>
+      </BoxContents>
+      {/* </Container> */}
+    </CustomBox>
   );
 };
 
