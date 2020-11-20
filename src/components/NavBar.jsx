@@ -60,13 +60,7 @@ const NavBar = () => {
               </DropdownItem>
               <DropdownItem>
                 <NavLink>
-                  <Link to="/classes">Browse</Link>
-                </NavLink>
-              </DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>
-                <NavLink>
-                  <Link to="/classes/search">Search</Link>
+                  <Link to="/classes">Browse / Search</Link>
                 </NavLink>
               </DropdownItem>
             </DropdownMenu>

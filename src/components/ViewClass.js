@@ -68,12 +68,13 @@ const ViewClass = () => {
   };
 
   return (
-    <Container>
+    <Container className="d-flex justify-content-center">
       {loading ? (
         <Spinner color="primary" className="m-auto" />
       ) : (
         <Card
           width="256px"
+          style={{ minWidth: "256px", maxWidth: "500px" }}
           className="d-flex flex-column justify-content-between"
         >
           <CardImg

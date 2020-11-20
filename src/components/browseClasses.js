@@ -14,15 +14,17 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import SearchForm from "./SearchForm";
 const BrowseClasses = () => {
   const [loading, setLoading] = useState(false);
   const [allClasses, setAllClasses] = useState([]);
+  const [queryString, setQueryString] = useState("");
 
   useEffect(() => {
     const loadMyClasses = async () => {
       try {
         setLoading(true);
-        const classes = await axios.get("/api/classes/all");
+        const classes = await axios.get(`/api/classes/all${queryString}`);
         setAllClasses(classes.data.data);
       } catch (error) {
         console.log(error);
@@ -31,7 +33,7 @@ const BrowseClasses = () => {
       }
     };
     loadMyClasses();
-  }, []);
+  }, [queryString]);
 
   const loadImage = (type) => {
     switch (type) {
@@ -52,7 +54,8 @@ const BrowseClasses = () => {
       : allClasses.map((cl) => (
           <Card
             width="256px"
-            className="d-flex flex-column justify-content-between"
+            style={{ minWidth: "256px", maxWidth: "256px" }}
+            className="d-flex flex-column justify-content-between my-3"
           >
             <CardImg
               top
@@ -100,15 +103,11 @@ const BrowseClasses = () => {
         ));
   };
 
-  const leaveClass = async (id) => {
-    await axios.post(`/api/classes/${id}/leave`);
-    setAllClasses(allClasses.filter((cl) => cl.id !== id));
-  };
-
   return (
     <Container>
       <h3 className="text-center my-3">Browse Classes</h3>
-      <CardDeck className="d-flex flex-wrap">
+      <SearchForm updateQuery={(q) => setQueryString(q)} />
+      <CardDeck className="d-flex flex-wrap justify-content-center">
         {loading ? (
           <Spinner color="primary" className="m-auto" />
         ) : (

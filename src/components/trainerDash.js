@@ -12,6 +12,7 @@ import {
   Badge,
   Container,
 } from "reactstrap";
+import DeleteModal from "./DeleteModal";
 import { DateTime } from "luxon";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -19,6 +20,8 @@ import { useSelector } from "react-redux";
 const TrainerDash = () => {
   const user = useSelector((state) => state.user.user);
   const [loading, setLoading] = useState(false);
+  const [lessonToDelete, setLessonToDelete] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
   const [myLessons, setMyLessons] = useState([]);
 
   useEffect(() => {
@@ -96,7 +99,7 @@ const TrainerDash = () => {
                 </div>
               </div>
               <div className="d-flex justify-content-between align-items-center">
-                <Button color="danger" onClick={() => deleteLesson(lesson.id)}>
+                <Button color="danger" onClick={() => deleteLesson(lesson)}>
                   Delete
                 </Button>
                 <Link
@@ -114,15 +117,24 @@ const TrainerDash = () => {
         ));
   };
 
-  const deleteLesson = async (id) => {
-    // Some stuff should happen before a delete (Modal)
-    return;
-    await axios.post(`/api/classes/${id}/leave`);
-    setMyLessons(myLessons.filter((cl) => cl.id !== id));
+  const deleteLesson = async (lesson) => {
+    setLessonToDelete(lesson);
+    setModalVisible(true);
+  };
+
+  const deleteLessonSuccess = () => {
+    setModalVisible(false);
+    setMyLessons(myLessons.filter((cl) => cl.id !== lessonToDelete.id));
+    setLessonToDelete(null);
   };
 
   return (
     <Container>
+      <DeleteModal
+        lesson={lessonToDelete}
+        isOpen={modalVisible}
+        toggle={() => deleteLessonSuccess()}
+      />
       <div className="d-flex justify-content-between align-items-center">
         <div></div>
         <h3 className="text-center my-3">Your Lessons</h3>

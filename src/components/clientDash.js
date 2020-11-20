@@ -53,6 +53,7 @@ const ClientDash = () => {
       : myClasses.map((cl) => (
           <Card
             width="256px"
+            style={{ minWidth: "256px", maxWidth: "256px" }}
             className="d-flex flex-column justify-content-between"
           >
             <CardImg
@@ -112,7 +113,7 @@ const ClientDash = () => {
   return (
     <Container>
       <h3 className="text-center my-3">Your Classes</h3>
-      <CardDeck className="d-flex flex-wrap">
+      <CardDeck className="d-flex flex-wrap justify-content-center">
         {loading ? (
           <Spinner color="primary" className="m-auto" />
         ) : (
