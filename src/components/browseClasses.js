@@ -12,28 +12,25 @@ import {
   Badge,
   Container,
 } from "reactstrap";
-import { DateTime } from "luxon";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-const TrainerDash = () => {
-  const user = useSelector((state) => state.user.user);
+const BrowseClasses = () => {
   const [loading, setLoading] = useState(false);
-  const [myLessons, setMyLessons] = useState([]);
+  const [allClasses, setAllClasses] = useState([]);
 
   useEffect(() => {
-    const loadMyLessons = async () => {
+    const loadMyClasses = async () => {
       try {
         setLoading(true);
-        const lessons = await axios.get(`/api/instructors/${user.id}/lessons`);
-        setMyLessons(lessons.data.data);
+        const classes = await axios.get("/api/classes/all");
+        setAllClasses(classes.data.data);
       } catch (error) {
         console.log(error);
       } finally {
         setLoading(false);
       }
     };
-    loadMyLessons();
+    loadMyClasses();
   }, []);
 
   const loadImage = (type) => {
@@ -49,10 +46,10 @@ const TrainerDash = () => {
     }
   };
 
-  const showLessons = () => {
-    return myLessons.length === 0
-      ? "You are not teaching any classes right now."
-      : myLessons.map((lesson) => (
+  const showClasses = () => {
+    return allClasses.length === 0
+      ? "There are currently no available classes."
+      : allClasses.map((cl) => (
           <Card
             width="256px"
             className="d-flex flex-column justify-content-between"
@@ -61,51 +58,40 @@ const TrainerDash = () => {
               top
               width="100%"
               height="171px"
-              src={loadImage(lesson.type)}
+              src={loadImage(cl.type)}
               alt="Card image cap"
             />
             <CardBody>
-              <CardTitle tag="h5">{lesson.name}</CardTitle>
+              <CardTitle tag="h5">{cl.name}</CardTitle>
               <CardSubtitle tag="h6" className="mb-2 text-muted">
-                {DateTime.fromISO(lesson.time).toFormat("MM-dd-yyyy hh:mm a")}
+                {cl.time}
               </CardSubtitle>
               <CardSubtitle
                 tag="h6"
                 className="mb-2 my-3 d-flex justify-content-between align-items-center"
               >
                 <p>
-                  Location: <Badge color="dark">{lesson.location}</Badge>
+                  Location: <Badge color="dark">{cl.location}</Badge>
                 </p>
                 <p>
-                  Type: <Badge color="dark">{lesson.type}</Badge>
+                  Type: <Badge color="dark">{cl.type}</Badge>
                 </p>
               </CardSubtitle>
               <div className="my-3">
                 <div>
-                  <Badge color="primary">{lesson.duration}</Badge> Minutes
+                  <Badge color="primary">{cl.duration}</Badge> Minutes
                 </div>
                 <div>
-                  <Badge color="info">{lesson.intensity}</Badge> /{" "}
+                  <Badge color="info">{cl.intensity}</Badge> /{" "}
                   <Badge color="warning">5</Badge> Intensity
                 </div>
                 <div>
-                  <Badge color="info">
-                    {lesson.numberOfRegisteredAttendees}
-                  </Badge>{" "}
-                  / <Badge color="warning">{lesson.maxClassSize}</Badge> Members
+                  <Badge color="info">{cl.numberOfRegisteredAttendees}</Badge> /{" "}
+                  <Badge color="warning">{cl.maxClassSize}</Badge> Members
                 </div>
               </div>
-              <div className="d-flex justify-content-between align-items-center">
-                <Button color="danger" onClick={() => deleteLesson(lesson.id)}>
-                  Delete
-                </Button>
-                <Link
-                  to={`/classes/${lesson.id}/edit`}
-                  className="btn btn-success"
-                >
-                  Edit
-                </Link>
-                <Link to={`/classes/${lesson.id}`} className="btn btn-primary">
+              <div className="d-flex justify-content-end align-items-center">
+                <Link to={`/classes/${cl.id}`} className="btn btn-primary">
                   View
                 </Link>
               </div>
@@ -114,31 +100,23 @@ const TrainerDash = () => {
         ));
   };
 
-  const deleteLesson = async (id) => {
-    // Some stuff should happen before a delete (Modal)
-    return;
+  const leaveClass = async (id) => {
     await axios.post(`/api/classes/${id}/leave`);
-    setMyLessons(myLessons.filter((cl) => cl.id !== id));
+    setAllClasses(allClasses.filter((cl) => cl.id !== id));
   };
 
   return (
     <Container>
-      <div className="d-flex justify-content-between align-items-center">
-        <div></div>
-        <h3 className="text-center my-3">Your Lessons</h3>
-        <Link to="/lessons/new" className="btn btn-success">
-          + Create Lesson
-        </Link>
-      </div>
+      <h3 className="text-center my-3">Browse Classes</h3>
       <CardDeck className="d-flex flex-wrap">
         {loading ? (
           <Spinner color="primary" className="m-auto" />
         ) : (
-          showLessons()
+          showClasses()
         )}
       </CardDeck>
     </Container>
   );
 };
 
-export default TrainerDash;
+export default BrowseClasses;
