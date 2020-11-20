@@ -99,20 +99,6 @@ const CreateClass = () => {
               />
               <InputGroupAddon addonType="append">Time</InputGroupAddon>
             </InputGroup>
-            <InputGroup className="my-2 ml-3 d-flex justify-content-center">
-              <InputGroupAddon addonType="prepend">Type</InputGroupAddon>
-              <AutoCompleteText
-                name="type"
-                className="form-control"
-                options={types}
-                Component="input"
-                value={currentClass.type}
-                trigger=""
-                spacer=""
-                onChange={onAutoChange}
-                matchAny={true}
-              />
-            </InputGroup>
           </div>
           <div className="d-flex justify-content-around">
             <InputGroup className="my-3 w-50 px-3">
@@ -142,6 +128,33 @@ const CreateClass = () => {
                 onChange={onInputChange}
               />
               <InputGroupAddon addonType="append">(Out of 5)</InputGroupAddon>
+            </InputGroup>
+          </div>
+          <div className="d-flex justify-content-around align-items-start">
+            <InputGroup className="my-3 w-50 px-3">
+              <InputGroupAddon addonType="prepend">
+                Max Class Size
+              </InputGroupAddon>
+              <Input
+                name="maxClassSize"
+                type="number"
+                value={currentClass.maxClassSize}
+                onChange={onInputChange}
+              />
+            </InputGroup>
+            <InputGroup className="my-3 ml-3 d-flex justify-content-center">
+              <InputGroupAddon addonType="prepend">Type</InputGroupAddon>
+              <AutoCompleteText
+                name="type"
+                className="form-control"
+                options={types}
+                Component="input"
+                value={currentClass.type}
+                trigger=""
+                spacer=""
+                onChange={onAutoChange}
+                matchAny={true}
+              />
             </InputGroup>
           </div>
           <Button color="success" onClick={onSubmit}>

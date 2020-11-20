@@ -26,6 +26,7 @@ ul.react-autocomplete-input {
 }
 
 ul.react-autocomplete-input > li {
+  list-style-type: none;
 }
 
 ul.react-autocomplete-input > li.active {
