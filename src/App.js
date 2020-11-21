@@ -14,6 +14,9 @@ import { Container } from "reactstrap";
 import Messages from "./components/Messages";
 import CreateClass from "./components/CreateClass";
 
+const BodyBackground = styled.div`
+  background-color: #483d8b;
+`;
 function App() {
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "https://lit-savannah-98479.herokuapp.com";
