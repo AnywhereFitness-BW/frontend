@@ -20,15 +20,19 @@ const CustomBox = styled.div`
 `;
 
 const BoxContents = styled.div`
-  margin-right: 200px;
+  // margin-right: 200px;
 `;
 
 const RegisterPrompt = styled.h2`
   color: white;
+  width: 100%;
 `;
 
 const Inputs = styled.div`
   margin-bottom: 10px;
+  input {
+    width: 250px;
+  }
 `;
 
 const Register = () => {
@@ -114,7 +118,7 @@ const Register = () => {
 
   return (
     <CustomBox>
-      <Container>
+      <Container className="text-center">
         <div>
           {errors.fname && (
             <UncontrolledAlert color="danger">
@@ -146,95 +150,91 @@ const Register = () => {
 
         <BoxContents>
           <Form onSubmit={onSubmit}>
-            <Row xs="2">
-              <Col sm="12" md={{ size: 6, offset: 3 }}>
-                <RegisterPrompt>Register Now!</RegisterPrompt>
-                <Inputs>
-                  <input
-                    onChange={onInputChange}
-                    name="fname"
-                    id="fname"
-                    type="text"
-                    onBlur={onInputChange}
-                    value={formData.fname}
-                    placeholder="First name"
-                  />
-                </Inputs>
-                <Inputs>
-                  <input
-                    onChange={onInputChange}
-                    name="lname"
-                    id="lname"
-                    type="text"
-                    onBlur={onInputChange}
-                    value={formData.lname}
-                    placeholder="Last name"
-                  />
-                </Inputs>
-                <Inputs>
-                  <input
-                    onChange={onInputChange}
-                    name="email"
-                    id="email"
-                    type="text"
-                    onBlur={onInputChange}
-                    value={formData.email}
-                    placeholder="Email address"
-                  />
-                </Inputs>
-                <Inputs>
-                  <input
-                    onChange={onInputChange}
-                    name="password"
-                    id="password"
-                    type="password"
-                    onBlur={onInputChange}
-                    value={formData.password}
-                    placeholder="Create password"
-                  />
-                </Inputs>
-                <Inputs>
-                  <input
-                    onChange={onInputChange}
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    type="password"
-                    onBlur={onInputChange}
-                    value={formData.confirmPassword}
-                    placeholder="Confirm password"
-                  />
-                </Inputs>
-                <Inputs>
-                  <select onChange={onInputChange} name="userRole">
-                    <option value="">--Choose one--</option>
-                    <option value="student">I am a student.</option>
-                    <option value="instructor">I am an instructor.</option>
-                  </select>
-                </Inputs>
-                {isAuthVisible && (
-                  <label htmlFor="code">
-                    Authorization code:
-                    <input
-                      onChange={onInputChange}
-                      name="authCode"
-                      id="authCode"
-                      value={formData.authCode}
-                      type="text"
-                      placeholder="Instructors only"
-                    />
-                  </label>
-                )}
+            <RegisterPrompt>Register Now!</RegisterPrompt>
+            <Inputs>
+              <input
+                onChange={onInputChange}
+                name="fname"
+                id="fname"
+                type="text"
+                onBlur={onInputChange}
+                value={formData.fname}
+                placeholder="First name"
+              />
+            </Inputs>
+            <Inputs>
+              <input
+                onChange={onInputChange}
+                name="lname"
+                id="lname"
+                type="text"
+                onBlur={onInputChange}
+                value={formData.lname}
+                placeholder="Last name"
+              />
+            </Inputs>
+            <Inputs>
+              <input
+                onChange={onInputChange}
+                name="email"
+                id="email"
+                type="text"
+                onBlur={onInputChange}
+                value={formData.email}
+                placeholder="Email address"
+              />
+            </Inputs>
+            <Inputs>
+              <input
+                onChange={onInputChange}
+                name="password"
+                id="password"
+                type="password"
+                onBlur={onInputChange}
+                value={formData.password}
+                placeholder="Create password"
+              />
+            </Inputs>
+            <Inputs>
+              <input
+                onChange={onInputChange}
+                name="confirmPassword"
+                id="confirmPassword"
+                type="password"
+                onBlur={onInputChange}
+                value={formData.confirmPassword}
+                placeholder="Confirm password"
+              />
+            </Inputs>
+            <Inputs>
+              <select onChange={onInputChange} name="userRole">
+                <option value="">--Choose one--</option>
+                <option value="student">I am a student.</option>
+                <option value="instructor">I am an instructor.</option>
+              </select>
+            </Inputs>
+            {isAuthVisible && (
+              <label htmlFor="code">
+                Authorization code:
+                <input
+                  onChange={onInputChange}
+                  name="authCode"
+                  id="authCode"
+                  value={formData.authCode}
+                  type="text"
+                  placeholder="Instructors only"
+                />
+              </label>
+            )}
 
-                {/* <input type="submit" /> */}
-                <ButtonToggle
-                  disabled={isButtonDisabled}
-                  color="info"
-                  type="submit"
-                >
-                  Submit
-                </ButtonToggle>
-              </Col>
-            </Row>
+            {/* <input type="submit" /> */}
+            <ButtonToggle
+              disabled={isButtonDisabled}
+              color="info"
+              type="submit"
+            >
+              Submit
+            </ButtonToggle>
           </Form>
         </BoxContents>
       </Container>
