@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup";
+import styled from "styled-components";
 import {
   UncontrolledAlert,
   Container,
@@ -8,6 +9,27 @@ import {
   ButtonToggle,
   Form,
 } from "reactstrap";
+
+const CustomBox = styled("div")`    
+  width: 500px;
+  margin: 5px;
+  border-radius: 10px;
+  padding: 40px;
+  border: 10px;
+  background-color: ${(props) => (props.active ? "#9370DB" : "#9370DB")};
+`;
+
+const BoxContents = styled("div")`
+  border: 0px auto;
+`;
+
+const Inputs = styled.div`
+  width: 300px;
+`
+
+const Button = styled.button`
+  width: 30px;
+`
 
 const Register = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -91,116 +113,130 @@ const Register = () => {
   };
 
   return (
-    <Container>
-      <div>
-        {errors.fname && (
-          <UncontrolledAlert color="danger"> {errors.fname} </UncontrolledAlert>
-        )}
-        {errors.lname && (
-          <UncontrolledAlert color="danger">{errors.lname} </UncontrolledAlert>
-        )}
-        {errors.email && (
-          <UncontrolledAlert color="danger">{errors.email} </UncontrolledAlert>
-        )}
-        {errors.password && (
-          <UncontrolledAlert color="danger">
-            {errors.password}{" "}
-          </UncontrolledAlert>
-        )}
-        {errors.confirmPassword && (
-          <UncontrolledAlert color="danger">
-            {errors.confirmPassword}{" "}
-          </UncontrolledAlert>
-        )}
-      </div>
+    <CustomBox>
+      <Container>
+        <div>
+          {errors.fname && (
+            <UncontrolledAlert color="danger">
+              {" "}
+              {errors.fname}{" "}
+            </UncontrolledAlert>
+          )}
+          {errors.lname && (
+            <UncontrolledAlert color="danger">
+              {errors.lname}{" "}
+            </UncontrolledAlert>
+          )}
+          {errors.email && (
+            <UncontrolledAlert color="danger">
+              {errors.email}{" "}
+            </UncontrolledAlert>
+          )}
+          {errors.password && (
+            <UncontrolledAlert color="danger">
+              {errors.password}{" "}
+            </UncontrolledAlert>
+          )}
+          {errors.confirmPassword && (
+            <UncontrolledAlert color="danger">
+              {errors.confirmPassword}{" "}
+            </UncontrolledAlert>
+          )}
+        </div>
 
-      <Form onSubmit={onSubmit}>
-        <Row xs="2">
-          <Col sm="12" md={{ size: 6, offset: 3 }}>
-            <h1>Register Now!</h1>
-            <input
-              onChange={onInputChange}
-              name="fname"
-              id="fname"
-              type="text"
-              onBlur={onInputChange}
-              value={formData.fname}
-              placeholder="First name"
-            />
-            <input
-              onChange={onInputChange}
-              name="lname"
-              id="lname"
-              type="text"
-              onBlur={onInputChange}
-              value={formData.lname}
-              placeholder="Last name"
-            />
-
-            <input
-              onChange={onInputChange}
-              name="email"
-              id="email"
-              type="text"
-              onBlur={onInputChange}
-              value={formData.email}
-              placeholder="Email address"
-            />
-
-            <input
-              onChange={onInputChange}
-              name="password"
-              id="password"
-              type="password"
-              onBlur={onInputChange}
-              value={formData.password}
-              placeholder="Create password"
-            />
-
-            <input
-              onChange={onInputChange}
-              name="confirmPassword"
-              id="confirmPassword"
-              type="password"
-              onBlur={onInputChange}
-              value={formData.confirmPassword}
-              placeholder="Confirm password"
-            />
-
-            <label>
-              Choose one:
-              <select onChange={onInputChange} name="userRole">
-                <option value="">--Choose one--</option>
-                <option value="student">I am a student.</option>
-                <option value="instructor">I am an instructor.</option>
-              </select>
-            </label>
-            {isAuthVisible && (
-              <label htmlFor="code">
-                Authorization code:
+        <BoxContents>
+          <Form onSubmit={onSubmit}>
+            <Row xs="2">
+              <Col sm="12" md={{ size: 6, offset: 3 }}>
+                <h1>Register Now!</h1>
+                <Inputs>
                 <input
                   onChange={onInputChange}
-                  name="authCode"
-                  id="authCode"
-                  value={formData.authCode}
+                  name="fname"
+                  id="fname"
                   type="text"
-                  placeholder="Instructors only"
+                  onBlur={onInputChange}
+                  value={formData.fname}
+                  placeholder="First name"
                 />
-              </label>
-            )}
+                <input
+                  onChange={onInputChange}
+                  name="lname"
+                  id="lname"
+                  type="text"
+                  onBlur={onInputChange}
+                  value={formData.lname}
+                  placeholder="Last name"
+                />
 
-            {/* <input type="submit" /> */}
-            <ButtonToggle
-              disabled={isButtonDisabled}
-              color="info"
-              type="submit"
-            >
-              Submit
-            </ButtonToggle>
-          </Col>
-        </Row>
-      </Form>
-    </Container>
+                <input
+                  onChange={onInputChange}
+                  name="email"
+                  id="email"
+                  type="text"
+                  onBlur={onInputChange}
+                  value={formData.email}
+                  placeholder="Email address"
+                />
+
+                <input
+                  onChange={onInputChange}
+                  name="password"
+                  id="password"
+                  type="password"
+                  onBlur={onInputChange}
+                  value={formData.password}
+                  placeholder="Create password"
+                />
+
+                <input
+                  onChange={onInputChange}
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  type="password"
+                  onBlur={onInputChange}
+                  value={formData.confirmPassword}
+                  placeholder="Confirm password"
+                />
+                </Inputs>
+                <label>
+                  Choose one:
+                  <select onChange={onInputChange} name="userRole">
+                    <option value="">--Choose one--</option>
+                    <option value="student">I am a student.</option>
+                    <option value="instructor">I am an instructor.</option>
+                  </select>
+                </label>
+                {isAuthVisible && (
+                  <label htmlFor="code">
+                    Authorization code:
+                    <input
+                      onChange={onInputChange}
+                      name="authCode"
+                      id="authCode"
+                      value={formData.authCode}
+                      type="text"
+                      placeholder="Instructors only"
+                    />
+                  </label>
+                )}
+
+                {/* <input type="submit" /> */}
+                <Button>
+                <ButtonToggle
+                  disabled={isButtonDisabled}
+                  color="info"
+                  type="submit"
+                >
+                  Submit
+                </ButtonToggle>
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </BoxContents>
+      </Container>
+    </CustomBox>
   );
 };
 

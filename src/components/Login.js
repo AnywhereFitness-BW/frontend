@@ -4,24 +4,36 @@ import styled from "styled-components";
 import * as yup from "yup";
 import {
   UncontrolledAlert,
-  Container,
+  // Container,
   Form,
   Row,
   Col,
   ButtonToggle,
 } from "reactstrap";
 
-const CustomBox = styled("div")`
+const BodyBackground = styled.div`
+  background-color: #483d8b;
+`;
+const CustomBox = styled.div`
   width: 300px;
   margin: 0px auto;
   border-radius: 10px;
   padding: 40px;
   border: 10px;
-  background-color: ${(props) => (props.active ? "purple" : "purple")};
+  background-color: #9370db;
 `;
 
-const BoxContents = styled("div")`
-  margin-right: 150px;
+const BoxContents = styled.div`
+  margin-right: 200px;
+`;
+
+const LoginPrompt = styled.h2`
+  color: white;
+  margin-bottom: 20px;
+`;
+
+const LoginInputs = styled.div`
+  margin-bottom: 10px;
 `;
 
 const Login = (props) => {
@@ -82,56 +94,64 @@ const Login = (props) => {
   };
 
   return (
-    <CustomBox active={props.active}>
-      {/* <Container> */}
-      <div>
-        {errors.email && (
-          <UncontrolledAlert color="danger">{errors.email} </UncontrolledAlert>
-        )}
-        {errors.password && (
-          <UncontrolledAlert color="danger">
-            {errors.password}{" "}
-          </UncontrolledAlert>
-        )}
-      </div>
+    <BodyBackground>
+      <CustomBox active={props.active}>
+        {/* <Container> */}
+        <div>
+          {errors.email && (
+            <UncontrolledAlert color="danger">
+              {errors.email}{" "}
+            </UncontrolledAlert>
+          )}
+          {errors.password && (
+            <UncontrolledAlert color="danger">
+              {errors.password}{" "}
+            </UncontrolledAlert>
+          )}
+        </div>
 
-      <BoxContents>
-        <Form onSubmit={onSubmit}>
-          <Row xs="2">
-            <Col sm="12" md={{ size: 6, offset: 3 }}>
-              <h2>Login</h2>
-              <input
-                onChange={onInputChange}
-                onBlur={onInputChange}
-                name="email"
-                email="email"
-                type="text"
-                placeholder="Enter email"
-                value={login.email}
-              />
-              <input
-                onChange={onInputChange}
-                onBlur={onInputChange}
-                name="password"
-                password="password"
-                type="password"
-                placeholder="Enter password"
-                value={login.password}
-              />
-              {/* <input type="submit" /> */}
-              <ButtonToggle
-                color="info"
-                type="submit"
-                disabled={loginIsDisabled}
-              >
-                Submit
-              </ButtonToggle>
-            </Col>
-          </Row>
-        </Form>
-      </BoxContents>
-      {/* </Container> */}
-    </CustomBox>
+        <BoxContents>
+          <Form onSubmit={onSubmit}>
+            <Row xs="2">
+              <Col sm="12" md={{ size: 6, offset: 3 }}>
+                <LoginPrompt>Login</LoginPrompt>
+                <LoginInputs>
+                  <input
+                    onChange={onInputChange}
+                    onBlur={onInputChange}
+                    name="email"
+                    email="email"
+                    type="text"
+                    placeholder="Enter email"
+                    value={login.email}
+                  />
+                </LoginInputs>
+                <LoginInputs>
+                  <input
+                    onChange={onInputChange}
+                    onBlur={onInputChange}
+                    name="password"
+                    password="password"
+                    type="password"
+                    placeholder="Enter password"
+                    value={login.password}
+                  />
+                </LoginInputs>
+                {/* <input type="submit" /> */}
+                <ButtonToggle
+                  color="info"
+                  type="submit"
+                  disabled={loginIsDisabled}
+                >
+                  Submit
+                </ButtonToggle>
+              </Col>
+            </Row>
+          </Form>
+        </BoxContents>
+        {/* </Container> */}
+      </CustomBox>
+    </BodyBackground>
   );
 };
 
