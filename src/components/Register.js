@@ -10,26 +10,26 @@ import {
   Form,
 } from "reactstrap";
 
-const CustomBox = styled("div")`    
-  width: 500px;
-  margin: 5px;
+const CustomBox = styled.div`
+  width: 400px;
+  margin: 0px auto;
   border-radius: 10px;
   padding: 40px;
   border: 10px;
-  background-color: ${(props) => (props.active ? "#9370DB" : "#9370DB")};
+  background-color: #9370db;
 `;
 
-const BoxContents = styled("div")`
-  border: 0px auto;
+const BoxContents = styled.div`
+  margin-right: 200px;
+`;
+
+const RegisterPrompt = styled.h2`
+  color: white;
 `;
 
 const Inputs = styled.div`
-  width: 300px;
-`
-
-const Button = styled.button`
-  width: 30px;
-`
+  margin-bottom: 10px;
+`;
 
 const Register = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -148,65 +148,69 @@ const Register = () => {
           <Form onSubmit={onSubmit}>
             <Row xs="2">
               <Col sm="12" md={{ size: 6, offset: 3 }}>
-                <h1>Register Now!</h1>
+                <RegisterPrompt>Register Now!</RegisterPrompt>
                 <Inputs>
-                <input
-                  onChange={onInputChange}
-                  name="fname"
-                  id="fname"
-                  type="text"
-                  onBlur={onInputChange}
-                  value={formData.fname}
-                  placeholder="First name"
-                />
-                <input
-                  onChange={onInputChange}
-                  name="lname"
-                  id="lname"
-                  type="text"
-                  onBlur={onInputChange}
-                  value={formData.lname}
-                  placeholder="Last name"
-                />
-
-                <input
-                  onChange={onInputChange}
-                  name="email"
-                  id="email"
-                  type="text"
-                  onBlur={onInputChange}
-                  value={formData.email}
-                  placeholder="Email address"
-                />
-
-                <input
-                  onChange={onInputChange}
-                  name="password"
-                  id="password"
-                  type="password"
-                  onBlur={onInputChange}
-                  value={formData.password}
-                  placeholder="Create password"
-                />
-
-                <input
-                  onChange={onInputChange}
-                  name="confirmPassword"
-                  id="confirmPassword"
-                  type="password"
-                  onBlur={onInputChange}
-                  value={formData.confirmPassword}
-                  placeholder="Confirm password"
-                />
+                  <input
+                    onChange={onInputChange}
+                    name="fname"
+                    id="fname"
+                    type="text"
+                    onBlur={onInputChange}
+                    value={formData.fname}
+                    placeholder="First name"
+                  />
                 </Inputs>
-                <label>
-                  Choose one:
+                <Inputs>
+                  <input
+                    onChange={onInputChange}
+                    name="lname"
+                    id="lname"
+                    type="text"
+                    onBlur={onInputChange}
+                    value={formData.lname}
+                    placeholder="Last name"
+                  />
+                </Inputs>
+                <Inputs>
+                  <input
+                    onChange={onInputChange}
+                    name="email"
+                    id="email"
+                    type="text"
+                    onBlur={onInputChange}
+                    value={formData.email}
+                    placeholder="Email address"
+                  />
+                </Inputs>
+                <Inputs>
+                  <input
+                    onChange={onInputChange}
+                    name="password"
+                    id="password"
+                    type="password"
+                    onBlur={onInputChange}
+                    value={formData.password}
+                    placeholder="Create password"
+                  />
+                </Inputs>
+                <Inputs>
+                  <input
+                    onChange={onInputChange}
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    type="password"
+                    onBlur={onInputChange}
+                    value={formData.confirmPassword}
+                    placeholder="Confirm password"
+                  />
+                </Inputs>
+                <Inputs>
                   <select onChange={onInputChange} name="userRole">
                     <option value="">--Choose one--</option>
                     <option value="student">I am a student.</option>
                     <option value="instructor">I am an instructor.</option>
                   </select>
-                </label>
+                </Inputs>
                 {isAuthVisible && (
                   <label htmlFor="code">
                     Authorization code:
@@ -222,7 +226,6 @@ const Register = () => {
                 )}
 
                 {/* <input type="submit" /> */}
-                <Button>
                 <ButtonToggle
                   disabled={isButtonDisabled}
                   color="info"
@@ -230,7 +233,6 @@ const Register = () => {
                 >
                   Submit
                 </ButtonToggle>
-                </Button>
               </Col>
             </Row>
           </Form>

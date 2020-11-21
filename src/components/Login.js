@@ -11,9 +11,6 @@ import {
   ButtonToggle,
 } from "reactstrap";
 
-const BodyBackground = styled.div`
-  background-color: #483d8b;
-`;
 const CustomBox = styled.div`
   width: 300px;
   margin: 0px auto;
@@ -94,7 +91,6 @@ const Login = (props) => {
   };
 
   return (
-    <BodyBackground>
       <CustomBox active={props.active}>
         {/* <Container> */}
         <div>
@@ -151,7 +147,6 @@ const Login = (props) => {
         </BoxContents>
         {/* </Container> */}
       </CustomBox>
-    </BodyBackground>
   );
 };
 
