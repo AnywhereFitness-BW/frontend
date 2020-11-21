@@ -38,11 +38,22 @@ const Inputs = styled.div`
 const Register = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isAuthVisible, setIsAuthVisible] = useState(false);
-
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
     email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    userRole: "",
+    authCode: "",
+  });
+
+  const [errors, setErrors] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    username: "",
     password: "",
     confirmPassword: "",
     userRole: "",
@@ -86,6 +97,7 @@ const Register = () => {
   const formSchema = yup.object().shape({
     fname: yup.string().required("First name is required"),
     lname: yup.string().required("Last name is required"),
+    username: yup.string().required("Username is required"),
     email: yup
       .string()
       .email("Not a valid email")
@@ -103,7 +115,7 @@ const Register = () => {
     });
   }, [formData]);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     formSchema.isValid(formData).then((valid) => {
       if (!valid) return;
@@ -113,7 +125,18 @@ const Register = () => {
       return;
     }
     setErrors({ ...errors, confirmPassword: "" });
-    console.log("form submitted");
+    const registerResponse = await dispatch(
+      userRegister({
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        authCode: formData.authCode,
+        lname: formData.lname,
+        fname: formData.fname,
+      })
+    );
+
+    if (registerResponse) history.push("/");
   };
 
   return (

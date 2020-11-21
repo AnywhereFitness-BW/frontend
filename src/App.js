@@ -1,36 +1,46 @@
 import React from "react";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import styled from "styled-components";
 import { Route, Link, Switch, useHistory } from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import PrivateRoute from "./components/PrivateRoute";
+import ClientDash from "./components/clientDash";
+import TrainerDash from "./components/trainerDash";
+import BrowseClasses from "./components/browseClasses";
+import ViewClass from "./components/ViewClass";
+import EditClass from "./components/EditClass";
+import axios from "axios";
+import NavBar from "./components/NavBar";
+import { Container } from "reactstrap";
+import Messages from "./components/Messages";
+import CreateClass from "./components/CreateClass";
 
 const BodyBackground = styled.div`
   background-color: #483d8b;
 `;
 function App() {
-  const history = useHistory();
-  history.push("/register");
+  axios.defaults.withCredentials = true;
+  axios.defaults.baseURL = "https://lit-savannah-98479.herokuapp.com";
+  // axios.defaults.baseURL = "http://localhost:5000/";
+
+  // const history = useHistory();
+  // history.push("/login");
 
   return (
-    <BodyBackground>
-      <div className="App">
-        {/* <h1>FITNESS ANYWHERE</h1> */}
-        {/* <h1>Login</h1>
-      <h2>Get Started</h2> */}
-        <Switch>
-          {/* <Register /> */}
-          {/* <PrivateRoute exact path="" component={} /> */}
-          {/* <PrivateRoute exact path="" component={} /> */}
-          {/* <PrivateRoute exact path="" component={} /> */}
-          {/* <PrivateRoute exact path="" component={} /> */}
+    <Container>
+      <NavBar />
+      <Messages />
+      <Switch>
+        <PrivateRoute exact path="/" component={ClientDash} />
+        <PrivateRoute exact path="/classes" component={BrowseClasses} />
+        <PrivateRoute exact path="/classes/:id" component={ViewClass} />
+        <PrivateRoute exact path="/classes/:id/edit" component={EditClass} />
+        <PrivateRoute exact path="/lessons" component={TrainerDash} />
+        <PrivateRoute exact path="/lessons/new" component={CreateClass} />
 
-          {/* path to login/sign up forms/component */}
-          <Route path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
-          {/* <Route path="/signUp" component={} /> */}
-        </Switch>
-      </div>
-    </BodyBackground>
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+      </Switch>
+    </Container>
   );
 }
 
