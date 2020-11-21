@@ -12,19 +12,20 @@ import {
   Badge,
   Container,
 } from "reactstrap";
-import { DateTime } from "luxon";
 import axios from "axios";
 import { Link } from "react-router-dom";
-const ClientDash = () => {
+import SearchForm from "./SearchForm";
+const BrowseClasses = () => {
   const [loading, setLoading] = useState(false);
-  const [myClasses, setMyClasses] = useState([]);
+  const [allClasses, setAllClasses] = useState([]);
+  const [queryString, setQueryString] = useState("");
 
   useEffect(() => {
     const loadMyClasses = async () => {
       try {
         setLoading(true);
-        const classes = await axios.get("/api/classes");
-        setMyClasses(classes.data.data);
+        const classes = await axios.get(`/api/classes/all${queryString}`);
+        setAllClasses(classes.data.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -32,7 +33,7 @@ const ClientDash = () => {
       }
     };
     loadMyClasses();
-  }, []);
+  }, [queryString]);
 
   const loadImage = (type) => {
     switch (type) {
@@ -48,13 +49,13 @@ const ClientDash = () => {
   };
 
   const showClasses = () => {
-    return myClasses.length === 0
-      ? "You are not signed up for any classes right now."
-      : myClasses.map((cl) => (
+    return allClasses.length === 0
+      ? "There are currently no available classes."
+      : allClasses.map((cl) => (
           <Card
             width="256px"
             style={{ minWidth: "256px", maxWidth: "256px" }}
-            className="d-flex flex-column justify-content-between"
+            className="d-flex flex-column justify-content-between my-3"
           >
             <CardImg
               top
@@ -66,7 +67,7 @@ const ClientDash = () => {
             <CardBody>
               <CardTitle tag="h5">{cl.name}</CardTitle>
               <CardSubtitle tag="h6" className="mb-2 text-muted">
-                {DateTime.fromISO(cl.time).toFormat("MM-dd-yyyy hh:mm a")}
+                {cl.time}
               </CardSubtitle>
               <CardSubtitle
                 tag="h6"
@@ -92,10 +93,7 @@ const ClientDash = () => {
                   <Badge color="warning">{cl.maxClassSize}</Badge> Members
                 </div>
               </div>
-              <div className="d-flex justify-content-between align-items-center">
-                <Button color="danger" onClick={() => leaveClass(cl.id)}>
-                  Leave
-                </Button>
+              <div className="d-flex justify-content-end align-items-center">
                 <Link to={`/classes/${cl.id}`} className="btn btn-primary">
                   View
                 </Link>
@@ -105,14 +103,10 @@ const ClientDash = () => {
         ));
   };
 
-  const leaveClass = async (id) => {
-    await axios.post(`/api/classes/${id}/leave`);
-    setMyClasses(myClasses.filter((cl) => cl.id !== id));
-  };
-
   return (
     <Container>
-      <h3 className="text-center my-3">Your Classes</h3>
+      <h3 className="text-center my-3">Browse Classes</h3>
+      <SearchForm updateQuery={(q) => setQueryString(q)} />
       <CardDeck className="d-flex flex-wrap justify-content-center">
         {loading ? (
           <Spinner color="primary" className="m-auto" />
@@ -124,4 +118,4 @@ const ClientDash = () => {
   );
 };
 
-export default ClientDash;
+export default BrowseClasses;
