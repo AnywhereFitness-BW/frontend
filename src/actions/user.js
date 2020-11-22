@@ -52,7 +52,7 @@ export const userRegister = (registerData) => async (dispatch) => {
       dispatch(addMessage(registerResponse.data.message, "danger"));
     }
   } catch (error) {
-    dispatch(addMessage(error.response.message, "danger"));
+    dispatch(addMessage(error.response.data.message, "danger"));
   } finally {
     dispatch({ type: API_CALL_END });
   }
@@ -84,6 +84,7 @@ export const checkMe = () => async (dispatch) => {
     userStorage.set(response.data.data);
     return response.data.data;
   } catch (err) {
+    console.log(err);
     userStorage.remove();
     return null;
   }

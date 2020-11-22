@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { userRegister } from "../actions/user";
+import { addMessage } from "../actions/messages";
 import { UncontrolledAlert, Container, ButtonToggle, Form } from "reactstrap";
 
 const CustomBox = styled.div`
@@ -34,6 +35,7 @@ const Inputs = styled.div`
 const Register = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isAuthVisible, setIsAuthVisible] = useState(false);
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const history = useHistory();
   const [formData, setFormData] = useState({
@@ -124,8 +126,23 @@ const Register = () => {
       })
     );
 
-    if (registerResponse) history.push("/");
+    if (registerResponse) {
+      dispatch(
+        addMessage(
+          "You have successfully registered, you can now log in.",
+          "info"
+        )
+      );
+    }
   };
+
+  useEffect(() => {
+    if (user) {
+      if (user.role === "INSTRUCTOR" || user.role === "ADMIN")
+        history.push("/lessons");
+      else history.push("/");
+    }
+  }, [user]);
 
   return (
     <CustomBox>
