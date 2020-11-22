@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import styled from "styled-components";
-import {
-  UncontrolledAlert,
-  Container,
-  Row,
-  Col,
-  ButtonToggle,
-  Form,
-} from "reactstrap";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { userRegister } from "../actions/user";
+import { UncontrolledAlert, Container, ButtonToggle, Form } from "reactstrap";
 
 const CustomBox = styled.div`
   width: 400px;
@@ -38,6 +34,8 @@ const Inputs = styled.div`
 const Register = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isAuthVisible, setIsAuthVisible] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
@@ -54,16 +52,6 @@ const Register = () => {
     lname: "",
     email: "",
     username: "",
-    password: "",
-    confirmPassword: "",
-    userRole: "",
-    authCode: "",
-  });
-
-  const [errors, setErrors] = useState({
-    fname: "",
-    lname: "",
-    email: "",
     password: "",
     confirmPassword: "",
     userRole: "",
@@ -113,7 +101,7 @@ const Register = () => {
       // console.log("is my form valid?", valid);
       setIsButtonDisabled(!valid);
     });
-  }, [formData]);
+  }, [formData, formSchema]);
 
   const onSubmit = async (e) => {
     e.preventDefault();

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../actions/user";
 import styled from "styled-components";
 import * as yup from "yup";
 import {
@@ -91,62 +92,60 @@ const Login = (props) => {
   };
 
   return (
-      <CustomBox active={props.active}>
-        {/* <Container> */}
-        <div>
-          {errors.email && (
-            <UncontrolledAlert color="danger">
-              {errors.email}{" "}
-            </UncontrolledAlert>
-          )}
-          {errors.password && (
-            <UncontrolledAlert color="danger">
-              {errors.password}{" "}
-            </UncontrolledAlert>
-          )}
-        </div>
+    <CustomBox active={props.active}>
+      {/* <Container> */}
+      <div>
+        {errors.email && (
+          <UncontrolledAlert color="danger">{errors.email} </UncontrolledAlert>
+        )}
+        {errors.password && (
+          <UncontrolledAlert color="danger">
+            {errors.password}{" "}
+          </UncontrolledAlert>
+        )}
+      </div>
 
-        <BoxContents>
-          <Form onSubmit={onSubmit}>
-            <Row xs="2">
-              <Col sm="12" md={{ size: 6, offset: 3 }}>
-                <LoginPrompt>Login</LoginPrompt>
-                <LoginInputs>
-                  <input
-                    onChange={onInputChange}
-                    onBlur={onInputChange}
-                    name="email"
-                    email="email"
-                    type="text"
-                    placeholder="Enter email"
-                    value={login.email}
-                  />
-                </LoginInputs>
-                <LoginInputs>
-                  <input
-                    onChange={onInputChange}
-                    onBlur={onInputChange}
-                    name="password"
-                    password="password"
-                    type="password"
-                    placeholder="Enter password"
-                    value={login.password}
-                  />
-                </LoginInputs>
-                {/* <input type="submit" /> */}
-                <ButtonToggle
-                  color="info"
-                  type="submit"
-                  disabled={loginIsDisabled}
-                >
-                  Submit
-                </ButtonToggle>
-              </Col>
-            </Row>
-          </Form>
-        </BoxContents>
-        {/* </Container> */}
-      </CustomBox>
+      <BoxContents>
+        <Form onSubmit={onSubmit}>
+          <Row xs="2">
+            <Col sm="12" md={{ size: 6, offset: 3 }}>
+              <LoginPrompt>Login</LoginPrompt>
+              <LoginInputs>
+                <input
+                  onChange={onInputChange}
+                  onBlur={onInputChange}
+                  name="email"
+                  email="email"
+                  type="text"
+                  placeholder="Enter email"
+                  value={login.email}
+                />
+              </LoginInputs>
+              <LoginInputs>
+                <input
+                  onChange={onInputChange}
+                  onBlur={onInputChange}
+                  name="password"
+                  password="password"
+                  type="password"
+                  placeholder="Enter password"
+                  value={login.password}
+                />
+              </LoginInputs>
+              {/* <input type="submit" /> */}
+              <ButtonToggle
+                color="info"
+                type="submit"
+                disabled={loginIsDisabled}
+              >
+                Submit
+              </ButtonToggle>
+            </Col>
+          </Row>
+        </Form>
+      </BoxContents>
+      {/* </Container> */}
+    </CustomBox>
   );
 };
 
