@@ -23,12 +23,14 @@ const BoxContents = styled.div`
 const RegisterPrompt = styled.h2`
   color: white;
   width: 100%;
+  margin-bottom: 20px;
+  padding-right: 75px;
 `;
 
 const Inputs = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 18px;
   input {
-    width: 250px;
+    width: 275px;
   }
 `;
 
