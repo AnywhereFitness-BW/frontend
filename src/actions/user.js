@@ -46,6 +46,7 @@ export const userRegister = (registerData) => async (dispatch) => {
         type: USER_LOGGED_IN,
         payload: { user: registerResponse.data.data },
       });
+      await dispatch(checkMe());
       success = true;
     } else {
       dispatch(addMessage(registerResponse.data.message, "danger"));
