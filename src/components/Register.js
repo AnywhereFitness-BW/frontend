@@ -189,10 +189,21 @@ const Register = () => {
                 onChange={onInputChange}
                 name="email"
                 id="email"
-                type="text"
+                type="email"
                 onBlur={onInputChange}
                 value={formData.email}
                 placeholder="Email address"
+              />
+            </Inputs>
+            <Inputs>
+              <input
+                onChange={onInputChange}
+                name="username"
+                id="username"
+                type="text"
+                onBlur={onInputChange}
+                value={formData.username}
+                placeholder="Username"
               />
             </Inputs>
             <Inputs>

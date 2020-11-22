@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../actions/user";
 import styled from "styled-components";
 import * as yup from "yup";
@@ -11,6 +11,7 @@ import {
   Col,
   ButtonToggle,
 } from "reactstrap";
+import { useHistory } from "react-router-dom";
 
 const CustomBox = styled.div`
   width: 300px;
@@ -35,13 +36,16 @@ const LoginInputs = styled.div`
 `;
 
 const Login = (props) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const user = useSelector((state) => state.user.user);
   const [login, setLogin] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -69,10 +73,7 @@ const Login = (props) => {
   };
 
   const formSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Not a valid email")
-      .required("Email is required"),
+    username: yup.string().required("Username is required"),
     password: yup.string().required("Please enter password"),
   });
 
@@ -83,20 +84,30 @@ const Login = (props) => {
     });
   }, [formSchema]);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     formSchema.isValid(login).then((valid) => {
       if (!valid) return;
     });
-    console.log("form submitted");
+    await await dispatch(userLogin(login.username, login.password));
   };
+
+  useEffect(() => {
+    if (user) {
+      if (user.role === "INSTRUCTOR" || user.role === "ADMIN")
+        history.push("/lessons");
+      else history.push("/");
+    }
+  }, [user]);
 
   return (
     <CustomBox active={props.active}>
       {/* <Container> */}
       <div>
-        {errors.email && (
-          <UncontrolledAlert color="danger">{errors.email} </UncontrolledAlert>
+        {errors.username && (
+          <UncontrolledAlert color="danger">
+            {errors.username}{" "}
+          </UncontrolledAlert>
         )}
         {errors.password && (
           <UncontrolledAlert color="danger">
@@ -114,11 +125,10 @@ const Login = (props) => {
                 <input
                   onChange={onInputChange}
                   onBlur={onInputChange}
-                  name="email"
-                  email="email"
+                  name="username"
                   type="text"
-                  placeholder="Enter email"
-                  value={login.email}
+                  placeholder="Enter Username"
+                  value={login.username}
                 />
               </LoginInputs>
               <LoginInputs>
@@ -126,7 +136,6 @@ const Login = (props) => {
                   onChange={onInputChange}
                   onBlur={onInputChange}
                   name="password"
-                  password="password"
                   type="password"
                   placeholder="Enter password"
                   value={login.password}
