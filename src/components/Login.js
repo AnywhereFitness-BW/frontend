@@ -3,14 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../actions/user";
 import styled from "styled-components";
 import * as yup from "yup";
-import {
-  UncontrolledAlert,
-  // Container,
-  Form,
-  Row,
-  Col,
-  ButtonToggle,
-} from "reactstrap";
+import { UncontrolledAlert, Form, Row, Col, ButtonToggle } from "reactstrap";
 import { useHistory } from "react-router-dom";
 
 const CustomBox = styled.div`
@@ -28,11 +21,14 @@ const BoxContents = styled.div`
 
 const LoginPrompt = styled.h2`
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 `;
 
 const LoginInputs = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  input {
+    width: 200px;
+  }
 `;
 
 const Login = (props) => {
@@ -115,7 +111,6 @@ const Login = (props) => {
           </UncontrolledAlert>
         )}
       </div>
-
       <BoxContents>
         <Form onSubmit={onSubmit}>
           <Row xs="2">
@@ -153,7 +148,6 @@ const Login = (props) => {
           </Row>
         </Form>
       </BoxContents>
-      {/* </Container> */}
     </CustomBox>
   );
 };
